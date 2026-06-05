@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Empleados - Salón Flora</title>
+
+<style>
+    body{
+        font-family: Arial, sans-serif;
+        background: #fff6fb;
+        margin: 0;
+        padding: 0;
+    }
+
+    header{
+        background: linear-gradient(90deg,#ff7eb3,#ff758c);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .container{
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 20px;
+    }
+
+    .card{
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 20px;
+    }
+
+    input{
+        width: 100%;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        outline: none;
+    }
+
+    button{
+        padding: 10px 15px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-top: 8px;
+        font-weight: bold;
+    }
+
+    .btn-primary{
+        background: #fa62ae;
+        color: white;
+    }
+
+    .btn-primary:hover{
+        background: #e63c78;
+    }
+
+    .btn-edit{
+        background: #4d9fff;
+        color: white;
+    }
+
+    .btn-delete{
+        background: #ff4d4d;
+        color: white;
+    }
+
+    table{
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+    }
+
+    th, td{
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+    }
+
+    th{
+        background: #ffe3ee;
+    }
+
+    .actions button{
+        margin-right: 5px;
+    }
+</style>
+</head>
+
+<body>
+
+<header>
+    🌸 Administración de Empleados - Salón Flora
+</header>
+
+<div class="container">
+
+    <!-- FORM -->
+    <div class="card">
+        <h3>Registrar / Editar Empleado</h3>
+
+        <input type="hidden" id="idEmpleado">
+
+        <input type="text" id="nombre" placeholder="Nombre">
+        <input type="text" id="especialidad" placeholder="Especialidad">
+        <input type="text" id="telefono" placeholder="Teléfono">
+
+        <button class="btn-primary" onclick="guardarEmpleado()">
+            Guardar
+        </button>
+    </div>
+
+    <!-- TABLE -->
+    <div class="card">
+        <h3>Lista de Empleados</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Especialidad</th>
+                    <th>Teléfono</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaEmpleados"></tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+const API = "http://localhost:3000/api/empleados";
+
+// Cargar empleados
+async function cargarEmpleados(){
+    const res = await fetch(API);
+    const data = await res.json();
+
+    const tbody = document.getElementById("tablaEmpleados");
+    tbody.innerHTML = "";
+
+    data.forEach(emp => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${emp.IdEmpleado}</td>
+                <td>${emp.Nombre}</td>
+                <td>${emp.Especialidad}</td>
+                <td>${emp.Telefono}</td>
+                <td class="actions">
+                    <button class="btn-edit" onclick='editar(${JSON.stringify(emp)})'>Editar</button>
+                    <button class="btn-delete" onclick="eliminar(${emp.IdEmpleado})">Eliminar</button>
+                </td>
+            </tr>
+        `;
+    });
+}
+
+// Guardar (crear o actualizar)
+async function guardarEmpleado(){
+
+    const id = document.getElementById("idEmpleado").value;
+    const nombre = document.getElementById("nombre").value;
+    const especialidad = document.getElementById("especialidad").value;
+    const telefono = document.getElementById("telefono").value;
+
+    const datos = { nombre, especialidad, telefono };
+
+    if(id){
+        await fetch(`${API}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
+    } else {
+        await fetch(API, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
+    }
+
+    limpiar();
+    cargarEmpleados();
+}
+
+// Editar
+function editar(emp){
+    document.getElementById("idEmpleado").value = emp.IdEmpleado;
+    document.getElementById("nombre").value = emp.Nombre;
+    document.getElementById("especialidad").value = emp.Especialidad;
+    document.getElementById("telefono").value = emp.Telefono;
+}
+
+// Eliminar (desactivar)
+async function eliminar(id){
+    if(confirm("¿Seguro que quieres desactivar este empleado?")){
+        await fetch(`${API}/${id}`, { method: "DELETE" });
+        cargarEmpleados();
+    }
+}
+
+// limpiar form
+function limpiar(){
+    document.getElementById("idEmpleado").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("especialidad").value = "";
+    document.getElementById("telefono").value = "";
+}
+
+// inicial
+cargarEmpleados();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Mis Citas</title>
+
+<link rel="stylesheet" href="../../assets/css/mis-citas.css">
+</head>
+
+<body>
+
+<header>
+    <h1>📅 Mis Citas</h1>
+
+    <div class="back-button">
+        <a href="dashboard-cliente.html" class="btn-back">←</a>
+    </div>
+</header>
+
+<div class="tabla-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Servicio</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabla-citas">
+            <tr><td colspan="5">Cargando...</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<script>
+const API = "http://localhost:3000/api";
+
+async function cargarCitas() {
+
+   const idUsuario =
+    localStorage.getItem("usuarioId");
+
+    if (!idUsuario) {
+
+        alert("Usuario no encontrado");
+        return;
+
+    }
+
+    try {
+
+        const res = await fetch(
+            `${API}/citas/mis-citas/${idUsuario}`
+        );
+
+        const citas = await res.json();
+
+        const tbody =
+            document.getElementById("tabla-citas");
+
+        tbody.innerHTML = "";
+
+        if (citas.length === 0) {
+
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="4">
+                        No tienes citas registradas
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        citas.forEach(cita => {
+
+  const partes = cita.fecha.split("T")[0].split("-");
+
+const fecha =
+    `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+    const hora =
+        cita.hora.substring(11,16);
+
+    tbody.innerHTML += `
+    <tr>
+        <td>${cita.servicio}</td>
+        <td>${fecha}</td>
+        <td>${hora}</td>
+        <td class="${
+    cita.estado === 'Cancelada'
+    ? 'estado-cancelada'
+    : ''
+}">
+    ${cita.estado}
+</td>
+    <td>
+
+  ${
+    cita.estado === 'Pendiente'
+    ?
+    `
+    <button
+    class="btn-editar"
+    onclick="editarCita(
+        ${cita.IdCita},
+        '${cita.fecha}',
+        '${cita.hora}',
+        ${cita.IdServicio},
+        ${cita.IdEmpleado}
+    )">
+    ✏️ Editar
+    </button>
+
+    <button
+    class="btn-cancelar"
+    onclick="cancelarCita(${cita.IdCita})">
+    ❌ Cancelar
+    </button>
+    `
+    :
+    cita.estado === 'Confirmada'
+    ?
+    `
+    <span class="estado-confirmada">
+        ✅ Confirmada por el salón
+    </span>
+    `
+    :
+    cita.estado === 'Completada'
+    ?
+    `
+    <span class="estado-completada">
+        💇 Servicio realizado
+    </span>
+    `
+    :
+    `
+    <span class="estado-cancelada">
+        🚫 Cita Cancelada
+    </span>
+    `
+}
+
+</td>
+        
+    </tr>
+    `;
+
+});
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Error cargando citas");
+
+    }
+
+}
+
+cargarCitas();
+let citaCancelar = null;
+
+function cancelarCita(idCita){
+
+    citaCancelar = idCita;
+
+    document
+    .getElementById("modalCancelar")
+    .style.display = "flex";
+}        
+function cerrarModal(){
+
+    document
+    .getElementById("modalCancelar")
+    .style.display = "none";
+}
+async function confirmarCancelacion(){
+
+    try{
+
+        const res = await fetch(
+            `${API}/citas/cancelar/${citaCancelar}`,
+            {
+                method:"PUT"
+            }
+        );
+
+        const data =
+        await res.json();
+
+        cerrarModal();
+
+        alert(data.message);
+
+        cargarCitas();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Error al cancelar cita"
+        );
+    }
+}
+let citaEditar = null;
+
+async function editarCita(
+    idCita,
+    fecha,
+    hora,
+    idServicio,
+    idEmpleado
+){
+
+    citaEditar = idCita;
+
+    await cargarServiciosEditar();
+    await cargarEmpleadosEditar();
+
+    document.getElementById("editarServicio").value =
+        idServicio;
+
+    document.getElementById("editarEmpleado").value =
+        idEmpleado;
+
+    document.getElementById("editarFecha").value =
+        fecha.split("T")[0];
+
+    document.getElementById("editarHora").value =
+        hora.substring(11,16);
+
+    document.getElementById("modalEditar")
+        .style.display = "flex";
+}
+
+function cerrarModalEditar(){
+
+    document.getElementById("modalEditar")
+        .style.display = "none";
+}
+async function guardarEdicion(){
+
+    const idServicio =
+        document.getElementById(
+            "editarServicio"
+        ).value;
+
+    const idEmpleado =
+        document.getElementById(
+            "editarEmpleado"
+        ).value;
+
+    const fecha =
+        document.getElementById(
+            "editarFecha"
+        ).value;
+
+    const hora =
+        document.getElementById(
+            "editarHora"
+        ).value;
+
+    if(!idServicio){
+
+        alert("Seleccione un servicio");
+        return;
+
+    }
+
+    if(!idEmpleado){
+
+        alert("Seleccione un empleado");
+        return;
+
+    }
+
+    if(!fecha){
+
+        alert("Seleccione una fecha");
+        return;
+
+    }
+
+    if(!hora){
+
+        alert("Seleccione una hora");
+        return;
+
+    }
+
+    try{
+
+        const res = await fetch(
+            `${API}/citas/${citaEditar}`,
+            {
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+                    idServicio,
+                    idEmpleado,
+                    fecha,
+                    hora
+                })
+            }
+        );
+
+        const data =
+        await res.json();
+
+        alert(data.message);
+
+        cerrarModalEditar();
+
+        cargarCitas();
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Error al actualizar cita"
+        );
+    }
+}
+async function cargarServiciosEditar(){
+
+    const res =
+        await fetch(`${API}/servicios`);
+
+    const servicios =
+        await res.json();
+
+    const select =
+        document.getElementById("editarServicio");
+
+    select.innerHTML = "";
+
+    servicios.forEach(servicio=>{
+
+        select.innerHTML += `
+        <option value="${servicio.IdServicio}">
+            ${servicio.Nombre}
+        </option>
+        `;
+    });
+}
+async function cargarEmpleadosEditar(){
+
+    const res =
+        await fetch(`${API}/empleados`);
+
+    const empleados =
+        await res.json();
+
+    const select =
+        document.getElementById("editarEmpleado");
+
+    select.innerHTML = "";
+
+    empleados.forEach(emp=>{
+
+        select.innerHTML += `
+        <option value="${emp.IdEmpleado}">
+            ${emp.Nombre}
+        </option>
+        `;
+    });
+}
+</script>
+<div id="modalCancelar" class="modal">
+
+    <div class="modal-content">
+
+        <h3>Cancelar cita</h3>
+
+        <p>
+            ¿Deseas cancelar esta cita?
+        </p>
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn-modal-cancelar"
+                onclick="cerrarModal()">
+                No
+            </button>
+
+            <button
+                class="btn-modal-aceptar"
+                onclick="confirmarCancelacion()">
+                Sí, cancelar
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- MODAL EDITAR CITA -->
+<div id="modalEditar" class="modal">
+
+    <div class="modal-content">
+
+        <h3>✏️ Editar Cita</h3>
+
+        <label>Servicio</label>
+        <select id="editarServicio">
+            <option>Cargando servicios...</option>
+        </select>
+
+        <label>Especialista</label>
+        <select id="editarEmpleado">
+            <option>Cargando empleados...</option>
+        </select>
+
+        <label>Fecha</label>
+        <input
+            type="date"
+            id="editarFecha"
+        >
+
+        <label>Hora</label>
+        <input
+            type="time"
+            id="editarHora"
+        >
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn-modal-cancelar"
+                onclick="cerrarModalEditar()">
+                Cancelar
+            </button>
+
+            <button
+                class="btn-modal-aceptar"
+                onclick="guardarEdicion()">
+                Guardar Cambios
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

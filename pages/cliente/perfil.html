@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<title>Mi Perfil</title>
+
+<link rel="stylesheet"
+href="../../assets/css/perfil.css">
+
+</head>
+
+<body>
+
+<div class="perfil-container">
+
+<img
+src="https://cdn-icons-png.flaticon.com/512/847/847969.png"
+class="avatar">
+ 
+<form>
+
+<input
+type="text"
+id="nombre"
+placeholder="Nombre">
+
+<input
+type="email"
+id="correo"
+placeholder="Correo">
+
+<input
+type="tel"
+id="telefono"
+placeholder="Teléfono">
+
+<div class="password-section">
+
+    <h3>🔒 Cambiar contraseña</h3>
+
+    <input
+    type="password"
+    id="password"
+    placeholder="Dejar vacio si no requiere nueva contraseña">
+
+   <input
+    type="password"
+    id="confirmarPassword"
+    placeholder="Confirmar contraseña">
+
+</div>
+
+<button
+type="button"
+onclick="guardarPerfil()">
+
+Guardar Cambios
+
+</button>
+
+</form>
+
+<a href="dashboard-cliente.html" class= "btn-back">
+
+← 
+
+</a>
+
+</div>
+<script>
+
+const API = "http://localhost:3000/api";
+
+async function cargarPerfil(){
+
+    const idUsuario =
+        localStorage.getItem("usuarioId");
+
+    try{
+
+        const res = await fetch(
+            `${API}/usuarios/${idUsuario}`
+        );
+
+        const usuario =
+            await res.json();
+
+        document.getElementById("nombre")
+            .value = usuario.Nombre;
+
+        document.getElementById("correo")
+            .value = usuario.Correo;
+
+        document.getElementById("telefono")
+            .value = usuario.Telefono;
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Error cargando perfil");
+    }
+}
+
+async function guardarPerfil(){
+
+    const idUsuario =
+        localStorage.getItem("usuarioId");
+
+    const nombre =
+        document.getElementById("nombre").value;
+
+    const correo =
+        document.getElementById("correo").value;
+
+    const telefono =
+        document.getElementById("telefono").value;
+        const password =
+    document.getElementById("password").value;
+
+const confirmarPassword =
+    document.getElementById("confirmarPassword").value;
+
+if(password !== confirmarPassword){
+
+    alert(
+        "Las contraseñas no coinciden"
+    );
+
+    return;
+}
+
+    try{
+
+        const res = await fetch(
+            `${API}/usuarios/${idUsuario}`,
+            {
+                method:"PUT",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body: JSON.stringify({
+    nombre,
+    correo,
+    telefono,
+    password
+})
+            }
+        );
+
+        const data =
+            await res.json();
+
+        alert(data.message);
+
+        localStorage.setItem(
+            "usuarioNombre",
+            nombre
+        );
+
+    }catch(error){
+
+        console.error(error);
+
+        alert("Error al actualizar perfil");
+    }
+}
+
+cargarPerfil();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+/* ==========================
+   RESET GENERAL
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body::before{
+
+    content:"";
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+
+    radial-gradient(
+        rgba(255,255,255,.7) 2px,
+        transparent 2px
+    );
+
+    background-size:
+    80px 80px;
+
+    pointer-events:none;
+
+    opacity:.3;
+}
+
+/* ==========================
+   BOTON FLORA
+========================== */
+
+.btn-flora{
+
+    background:
+    linear-gradient(
+    135deg,
+    #e38db2,
+    #c85a8f
+    );
+
+    color:white !important;
+
+    border:none;
+
+    border-radius:14px;
+
+    padding:12px 24px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.btn-flora:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 20px rgba(200,90,143,.35);
+}
+
+/* ==========================
+   HERO
+========================== */
+
+.hero{
+
+    min-height:90vh;
+
+    display:flex;
+    align-items:center;
+
+    padding:50px 8%;
+
+    background:
+    linear-gradient(
+    rgba(255,245,249,.85),
+    rgba(255,245,249,.85)
+    );
+}
+
+.hero-content{
+
+    max-width:1300px;
+
+    width:100%;
+
+    margin:auto;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:60px;
+}
+
+.hero-text{
+
+    flex:1;
+}
+
+.hero-text h1{
+
+    font-size:4.5rem;
+
+    color:#c85a8f;
+
+    font-weight:700;
+
+    white-space:nowrap;
+}
+
+.hero-text p{
+
+    font-size:1.3rem;
+
+    color:#666;
+
+    margin-bottom:30px;
+}
+
+/* Imagen Hero */
+
+.hero-image{
+
+    flex:1;
+
+    text-align:center;
+}
+
+.hero-image img{
+
+    width:100%;
+
+    max-width:550px;
+
+    border-radius:30px;
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,.15);
+
+    transition:.4s;
+}
+
+.hero-image img:hover{
+
+    transform:scale(1.03);
+}
+
+/* ==========================
+   BIENVENIDA
+========================== */
+
+/* ==========================
+   BIENVENIDA FLORA SALON
+========================== */
+
+.bienvenida{
+
+    max-width:1000px;
+
+    margin:100px auto;
+
+    padding:50px;
+
+    text-align:center;
+
+    background:
+    rgba(255,255,255,.65);
+
+    backdrop-filter:blur(12px);
+
+    border-radius:30px;
+
+    box-shadow:
+    0 15px 35px rgba(200,90,143,.12);
+
+    border:
+    1px solid rgba(255,255,255,.5);
+
+    transition:.4s;
+}
+
+.bienvenida:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:
+    0 20px 45px rgba(200,90,143,.18);
+}
+
+.bienvenida h2{
+
+    color:#c85a8f;
+
+    font-size:3rem;
+
+    font-weight:700;
+
+    margin-bottom:20px;
+
+    position:relative;
+}
+
+/* Línea decorativa */
+
+.bienvenida h2::after{
+
+    content:"";
+
+    display:block;
+
+    width:120px;
+
+    height:4px;
+
+    margin:15px auto 0;
+
+    border-radius:10px;
+
+    background:
+    linear-gradient(
+    90deg,
+    #f8b6d1,
+    #c85a8f,
+    #f8b6d1
+    );
+}
+
+.bienvenida p{
+
+    font-size:1.2rem;
+
+    line-height:2;
+
+    color:#666;
+
+    max-width:850px;
+
+    margin:auto;
+}
+
+/* Ícono decorativo */
+
+.bienvenida::before{
+
+    content:"🌸";
+
+    display:block;
+
+    font-size:3rem;
+
+    margin-bottom:15px;
+}
+
+/* ==========================
+   SERVICIOS
+========================== */
+
+.service-card{
+
+    background:white;
+
+    border-radius:25px;
+
+    overflow:hidden;
+
+    text-align:center;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+
+    transition:.4s;
+
+    margin-bottom:25px;
+}
+
+.service-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+    0 15px 35px rgba(200,90,143,.15);
+}
+
+.service-img{
+
+    width:100%;
+
+    height:250px;
+
+    object-fit:cover;
+}
+
+.service-card h4{
+
+    color:#c85a8f;
+
+    margin-top:20px;
+
+    font-size:1.4rem;
+
+    font-weight:600;
+}
+
+.service-card p{
+
+    color:#666;
+
+    padding:0 20px 25px;
+
+    line-height:1.6;
+}
+
+/* ==========================
+   LINKS TARJETAS
+========================== */
+
+.card-link{
+
+    display:block;
+
+    padding:35px;
+
+    background:white;
+
+    border-radius:25px;
+
+    text-decoration:none;
+
+    color:#c85a8f;
+
+    font-size:1.1rem;
+
+    font-weight:600;
+
+    box-shadow:
+    0 8px 20px rgba(0,0,0,.08);
+
+    transition:.3s;
+}
+
+.card-link:hover{
+
+    transform:translateY(-6px);
+
+    color:#b94c7a;
+
+    box-shadow:
+    0 15px 30px rgba(0,0,0,.12);
+}
+
+/* ==========================
+   PROMOCIONES
+========================== */
+
+.promo-section{
+
+    background:
+    linear-gradient(
+    135deg,
+    #ffd9e8,
+    #ffeef5
+    );
+
+    padding:80px 20px;
+
+    text-align:center;
+}
+
+.promo-section h2{
+
+    color:#c85a8f;
+
+    margin-bottom:15px;
+}
+
+/* ==========================
+   TESTIMONIOS
+========================== */
+
+.testimonios{
+
+    padding:80px 20px;
+
+    background:#fff6fa;
+
+    text-align:center;
+}
+
+.testimonios h2{
+
+    color:#c85a8f;
+
+    margin-bottom:40px;
+}
+
+.testimonio{
+
+    max-width:700px;
+
+    margin:auto;
+
+    background:white;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 8px 25px rgba(0,0,0,.08);
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+
+    background:#c85a8f;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+    .hero-content{
+
+        flex-direction:column;
+    }
+
+    .hero-text{
+
+        text-align:center;
+    }
+
+    .hero-text h1{
+
+        font-size:3rem;
+    }
+}
+.hero{
+    position:relative;
+    overflow:hidden;
+}
+/* ===== LOGO FLORA ===== */
+
+.logo-flora{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding-top:25px;
+
+    margin-bottom:20px;
+}
+
+.logo-img{
+
+    width:180px;
+
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    background:white;
+
+    padding:10px;
+
+    box-shadow:
+    0 10px 25px rgba(200,90,143,.25);
+
+    transition:.4s;
+}
+
+.logo-img:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 15px 35px rgba(200,90,143,.35);
+}
+
+/* ==========================
+   CARRUSEL SUPERIOR
+========================== */
+
+.hero-slider{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    height:420px;
+
+    z-index:-1;
+
+    overflow:hidden;
+}
+
+.slide{
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    opacity:0;
+
+    transition:opacity 1.5s ease-in-out;
+
+    background-size:cover;
+
+    background-position:center;
+
+    filter:
+    brightness(.55)
+    blur(2px);
+}
+
+.slide.active{
+
+    opacity:1;
+}
+
+/* IMAGEN 1 */
+
+.slide:nth-child(1){
+
+    background-image:
+    linear-gradient(
+    rgba(178, 103, 128, 0.435),
+    rgba(243, 84, 169, 0.5)),
+    url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80');
+}
+
+/* IMAGEN 2 */
+
+.slide:nth-child(2){
+
+    background-image:
+    linear-gradient(
+    rgba(255,210,225,.4),
+    rgba(182, 64, 127, 0.5)),
+    url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1600&q=80');
+}
+
+/* IMAGEN 3 */
+
+.slide:nth-child(3){
+
+    background-image:
+    linear-gradient(
+    rgba(248, 99, 149, 0.4),
+    rgba(203, 121, 165, 0.5)),
+    url('https://images.unsplash.com/photo-1522337660859-02fbefca4702?auto=format&fit=crop&w=1600&q=80');
+}
+.logo-flora{
+
+    position:relative;
+
+    z-index:5;
+
+    display:flex;
+
+    justify-content:center;
+
+    padding-top:60px;
+
+    margin-bottom:40px;
+}
+
+.logo-img{
+
+    width:220px;
+
+    height:220px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    border:8px solid white;
+
+    background:white;
+
+    box-shadow:
+    0 15px 40px rgba(0,0,0,.15);
+}

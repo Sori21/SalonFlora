@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Citas</title>
+
+<link rel="stylesheet" href="../../assets/css/citas-admin.css">
+</head>
+
+<body>
+
+<div class="contenedor">
+
+<h1>📅 Administración de Citas</h1>
+
+<table>
+<thead>
+<tr>
+<th>Cliente</th>
+<th>Servicio</th>
+<th>Fecha</th>
+<th>Hora</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tabla-citas">
+<tr><td colspan="6">Cargando...</td></tr>
+</tbody>
+
+</table>
+
+</div>
+
+<script>
+const API = "http://localhost:3000/api";
+
+async function cargarCitas() {
+    try {
+        const res = await fetch(`${API}/citas`, {
+        });
+
+        const citas = await res.json();
+
+        const tbody = document.getElementById("tabla-citas");
+        tbody.innerHTML = "";
+
+        if (citas.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="6">No hay citas</td></tr>`;
+            return;
+        }
+
+        citas.forEach(cita => {
+    const fecha =
+        new Date(cita.Fecha)
+        .toLocaleDateString("es-MX");
+
+    const hora =
+        new Date(cita.Hora)
+        .toLocaleTimeString("es-MX", {
+            timeZone: "UTC",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false
+        });
+     
+
+    tbody.innerHTML += `
+        <tr>
+            <td>${cita.Cliente}</td>
+            <td>${cita.Servicio}</td>
+            <td>${fecha}</td>
+            <td>${hora}</td>
+            <td>${cita.Estado}</td>
+
+            <td>
+
+               ${
+    cita.Estado === "Pendiente"
+    ?
+    `
+    <button
+        class="confirmar"
+        onclick="confirmarCita(${cita.IdCita})">
+        Confirmar
+    </button>
+
+    <button
+        class="cancelar"
+        onclick="cancelarCita(${cita.IdCita})">
+        Cancelar
+    </button>
+    `
+    :
+    cita.Estado === "Confirmada"
+    ?
+    `
+    <button
+        class="completar"
+        onclick="completarCita(${cita.IdCita})">
+        Completar
+    </button>
+    `
+    :
+    cita.Estado === "Completada"
+    ?
+    `
+    <span>✅ Completada</span>
+    `
+    :
+    `
+    <span>❌ Cancelada</span>
+    `
+}
+
+            </td>
+        </tr>
+    `;
+});
+    } catch (error) {
+        console.error(error);
+        alert("Error cargando citas");
+    }
+}
+
+// 🔹 Confirmar cita
+async function confirmarCita(id) {
+    const token = localStorage.getItem("token");
+
+    await fetch(`${API}/citas/confirmar/${id}`, {
+        method: "PUT",
+       
+    });
+
+    cargarCitas();
+}
+
+// 🔹 Cancelar cita
+async function cancelarCita(id) {
+
+    await fetch(
+        `${API}/citas/cancelar/${id}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    cargarCitas();
+}
+
+async function completarCita(id) {
+
+    await fetch(
+        `${API}/citas/completar/${id}`,
+        {
+            method: "PUT"
+        }
+    );
+
+    cargarCitas();
+}
+
+cargarCitas();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Panel Administrador</title>
+
+<link rel="stylesheet" href="../../assets/css/admin.css">
+
+</head>
+<body>
+
+<h1>Panel Administrativo - Salón Flora</h1>
+
+<div class="estadisticas">
+
+    <div class="card">
+        <h2>Citas Hoy</h2>
+        <p id="citasHoy">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Clientes</h2>
+        <p id="clientes">0</p>
+    </div>
+
+    <div class="card">
+        <h2>Servicios</h2>
+        <p id="servicios">0</p>
+    </div>
+
+    <div class="card">
+    <h2>Citas Completadas</h2>
+    <p id="ingresos">0</p>
+</div>
+
+</div>
+
+<div class="menu-admin">
+
+    <a href="clientes.html">
+        <button>👥 Clientes</button>
+    </a>
+
+    <a href="citas-admin.html">
+        <button>📅 Citas</button>
+    </a>
+
+    <a href="servicios-admin.html">
+        <button>💅 Servicios</button>
+    </a>
+
+    <a href="reportes.html">
+        <button>📊 Reportes</button>
+    </a>
+
+    <a href="empleados.html">
+    <button>👩‍💼 Empleados</button>
+    </a>
+
+<a href="../../index.html"
+onclick="logout()">
+    <button>🚪 Cerrar Sesión</button>
+</a>
+
+</div>
+<script>
+
+const API =
+"http://localhost:3000/api";
+
+async function cargarDashboard(){
+
+    try{
+
+        const res = await fetch(
+            `${API}/admin/dashboard`
+        );
+
+        const data =
+        await res.json();
+
+        document.getElementById(
+            "citasHoy"
+        ).innerText =
+        data.citasHoy;
+
+        document.getElementById(
+            "clientes"
+        ).innerText =
+        data.clientes;
+
+        document.getElementById(
+            "servicios"
+        ).innerText =
+        data.servicios;
+
+        document.getElementById("ingresos").innerText =
+data.ingresos;
+
+    }catch(error){
+
+        console.error(error);
+
+    }
+
+}
+
+cargarDashboard();
+function logout(){
+
+    localStorage.clear();
+
+    window.location.href =
+    "../../index.html";
+}
+</script>
+</body>
+</html>

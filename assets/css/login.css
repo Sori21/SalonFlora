@@ -1,0 +1,202 @@
+/* ===== ESTILOS GENERALES ===== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #fce4ec,
+        #f8bbd0,
+        #f3e5f5
+    );
+}
+
+/* ===== CONTENEDOR LOGIN ===== */
+
+.login-container{
+
+    width:380px;
+
+    background:rgba(255,255,255,0.95);
+
+    backdrop-filter:blur(10px);
+
+    padding:40px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.15);
+
+    animation:aparecer .7s ease;
+}
+
+@keyframes aparecer{
+
+    from{
+        opacity:0;
+        transform:translateY(-20px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ===== LOGO ===== */
+
+.logo{
+
+    font-size:60px;
+
+    margin-bottom:10px;
+}
+
+.login-container h2{
+
+    color:#c75b8b;
+
+    margin-bottom:25px;
+
+    font-weight:600;
+}
+
+/* ===== INPUTS ===== */
+
+input{
+    width:100%;
+
+    padding:14px 16px;
+
+    margin:12px 0;
+
+    border:2px solid #f0c5d8;
+
+    border-radius:10px;
+
+    background:#fff;
+
+    color:#555;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:0.3s ease;
+}
+
+/* ===== BOTÓN ===== */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #d46a92,
+        #b84c78
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 20px rgba(212,106,146,.4);
+}
+
+/* ===== LINKS ===== */
+.links{
+    margin-top:20px;
+}
+
+.links a{
+
+    text-decoration:none;
+
+    color:#bf4e7e;
+
+    font-size:14px;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media(max-width:450px){
+
+    .login-container{
+
+        width:90%;
+        padding:30px;
+    }
+}
+.btn-back{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    background:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#c85a8f;
+
+    font-size:24px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.mensaje-login {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    border-radius: 5px;
+    display: none;
+}

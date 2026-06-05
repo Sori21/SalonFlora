@@ -1,0 +1,95 @@
+body{
+background:#f4f6f9;
+font-family:Arial,sans-serif;
+padding:30px;
+}
+
+.contenedor{
+max-width:1200px;
+margin:auto;
+}
+
+h1{
+margin-bottom:20px;
+color:#b45f8a;
+}
+
+table{
+width:100%;
+background:white;
+border-collapse:collapse;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+th{
+background:#b45f8a;
+color:white;
+padding:15px;
+}
+
+td{
+padding:12px;
+text-align:center;
+}
+
+tr:nth-child(even){
+background:#fafafa;
+}
+
+.pendiente{
+
+background:#ffe6a7;
+color:#8a6d00;
+
+padding:5px 10px;
+border-radius:20px;
+
+}
+
+.confirmada{
+
+background:#c7f5d9;
+color:#0f6b34;
+
+padding:5px 10px;
+border-radius:20px;
+
+}
+
+.confirmar,
+.editar,
+.cancelar{
+
+border:none;
+padding:8px 12px;
+border-radius:8px;
+cursor:pointer;
+
+}
+
+.confirmar{
+background:#28a745;
+color:white;
+}
+
+.editar{
+background:#007bff;
+color:white;
+}
+
+.cancelar{
+background:#dc3545;
+color:white;
+}
+.completar{
+    background:#a7289c;
+    color:white;
+    border:none;
+    padding:8px 12px;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.completar:hover{
+    opacity:.9;
+}

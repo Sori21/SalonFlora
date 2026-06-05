@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dashboard Cliente | Flora Salon</title>
+
+<link rel="stylesheet" href="../../assets/css/dashboard-cliente.css">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <div class="logo">
+        <img src="https://thumbs.dreamstime.com/b/flor-de-c%C3%ADrculo-femenino-concepto-floral-pelo-rostro-perfil-y-flores-peluquer%C3%ADa-belleza-spa-o-similar-280378869.jpg"
+        alt="Logo Flora Salon" class="logo-img">
+    </div>
+
+    <h2>Flora Salon</h2>
+</header>
+
+<nav class="sidebar" id="sidebar">
+
+    <a href="dashboard-cliente.html">🏠 Inicio</a>
+    <a href="mis-citas.html">📅 Mis Citas</a>
+    <a href="perfil.html">👤 Mi Perfil</a>
+    <a href="../citas/citas.html">➕ Reservar Cita</a>
+
+    <a href="#" onclick="logout()">🚪 Cerrar Sesión</a>
+</nav>
+
+<main class="contenido">
+
+    <h1 id="welcome">Bienvenida 👋</h1>
+
+    <p>Aquí puedes administrar tus citas y consultar tu información.</p>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Próxima cita</h3>
+            <p id="nextCita">Cargando...</p>
+        </div>
+
+        <div class="card">
+            <h3>Servicios realizados</h3>
+            <p id="servicios">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Puntos Flora</h3>
+            <p id="puntos">0</p>
+        </div>
+    </div>
+
+</main>
+
+<!-- Carrusel -->
+<div class="dashboard-slider">
+
+    <div class="slide active"><div class="slide-text">💅 Promoción en Uñas Gelish</div></div>
+    <div class="slide"><div class="slide-text">👁️ Extensiones de pestañas 2x1</div></div>
+    <div class="slide"><div class="slide-text">💄 Maquillaje profesional para eventos</div></div>
+
+</div>
+
+<script>
+const API = "http://localhost:3000/api";
+
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "../../index.html";
+}
+
+async function cargarDashboard() {
+
+    const nombre =
+        localStorage.getItem("usuarioNombre") || "Cliente";
+
+   const idUsuario =
+    localStorage.getItem("usuarioId");
+
+    document.getElementById("welcome").innerText =
+        `Bienvenida ${nombre} 🌸`;
+
+    try {
+
+        // Cargar citas del usuario
+        const res = await fetch(
+    `${API}/citas/mis-citas/${idUsuario}`
+);
+
+        const citas = await res.json();
+
+       const proximas = citas
+    .filter(cita =>
+        cita.estado === "Confirmada" ||
+        cita.estado === "Pendiente"
+    )
+    .sort((a, b) => new Date(a.fecha) - new Date(b.fecha));
+
+const proximaCita = proximas[0];
+if (proximaCita) {
+
+    const partes =
+        proximaCita.fecha
+        .split("T")[0]
+        .split("-");
+
+    const fecha =
+        `${partes[2]}/${partes[1]}/${partes[0]}`;
+
+    const hora =
+        proximaCita.hora.substring(11,16);
+
+    document.getElementById("nextCita").innerText =
+        `${fecha} - ${hora}`;
+
+} else {
+
+    document.getElementById("nextCita").innerText =
+        "No tienes citas";
+
+}
+
+document.getElementById("servicios").innerText =
+    citas.filter(
+        cita => cita.estado !== "Cancelada"
+    ).length;
+
+        // Valor temporal
+        document.getElementById("puntos").innerText = 0;
+
+    } catch (error) {
+
+        console.error(error);
+
+        document.getElementById("nextCita").innerText =
+            "Error cargando citas";
+    }
+}
+
+cargarDashboard();
+
+// Carrusel
+const slides = document.querySelectorAll(".slide");
+
+let current = 0;
+
+setInterval(() => {
+
+    slides[current].classList.remove("active");
+
+    current = (current + 1) % slides.length;
+
+    slides[current].classList.add("active");
+
+}, 4000);
+</script>
+
+</body>
+</html>

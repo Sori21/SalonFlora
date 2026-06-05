@@ -1,0 +1,268 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:linear-gradient(
+        135deg,
+        #fce4ec,
+        #f8bbd0,
+        #f3d7e6
+    );
+}
+
+.registro-container{
+
+    width:450px;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:25px;
+
+    text-align:center;
+
+    box-shadow:
+    0 15px 35px rgba(0,0,0,.12);
+}
+
+.logo{
+    font-size:60px;
+    margin-bottom:10px;
+}
+
+h1{
+    color:#c85a8f;
+    margin-bottom:25px;
+}
+
+input{
+
+    width:100%;
+
+    padding:14px 18px;
+
+    margin:10px 0;
+
+    border:2px solid #f2c4d6;
+
+    border-radius:12px;
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+}
+
+input::placeholder{
+    color:#b58a9e;
+}
+
+input:focus{
+
+    border-color:#d46a92;
+
+    box-shadow:
+    0 0 12px rgba(212,106,146,.25);
+}
+
+button{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #d46a92,
+        #bf4e7e
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 20px rgba(212,106,146,.3);
+}
+
+.links{
+    margin-top:20px;
+}
+
+.links a{
+
+    text-decoration:none;
+
+    color:#bf4e7e;
+
+    font-size:14px;
+}
+
+.links a:hover{
+    text-decoration:underline;
+}
+
+.back-button{
+    text-align:left;
+    margin-bottom:20px;
+    
+}
+
+.back-button a{
+
+    text-decoration:none;
+
+    color:#c85a8f;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    transition:.3s;
+    
+}
+
+.back-button a:hover{
+
+    color:#a53d6a;
+
+    padding-left:5px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+/* ===== LOGO FLORA ===== */
+
+.logo-flora{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding-top:25px;
+
+    margin-bottom:20px;
+}
+
+.logo-img{
+
+    width:180px;
+
+    height:180px;
+
+    object-fit:cover;
+
+    border-radius:50%;
+
+    background:white;
+
+    padding:10px;
+
+    box-shadow:
+    0 10px 25px rgba(200,90,143,.25);
+
+    transition:.4s;
+}
+
+.logo-img:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+    0 15px 35px rgba(200,90,143,.35);
+}
+/* ===== BOTÓN ===== */
+
+button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:linear-gradient(
+        135deg,
+        #d46a92,
+        #b84c78
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+button:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 20px rgba(212,106,146,.4);
+}
+.btn-back{
+    top:20px;
+    left:20px;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    background:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#c85a8f;
+
+    font-size:24px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+#mensaje{
+    margin-top:15px;
+    text-align:center;
+    font-weight:bold;
+    color:#b8860b;
+}

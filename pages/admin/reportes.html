@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Reportes</title>
+
+<link rel="stylesheet" href="../../assets/css/admin.css">
+
+<style>
+.estadisticas{
+    display:grid;
+    grid-template-columns: repeat(4,1fr);
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+
+.card h3{
+    margin:0;
+    color:#ff4d8d;
+}
+
+.card p{
+    font-size:22px;
+    font-weight:bold;
+}
+
+table{
+    width:100%;
+    margin-top:20px;
+    border-collapse:collapse;
+    background:white;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #eee;
+}
+th{
+    background:#ffe3ee;
+}
+</style>
+</head>
+
+<body>
+
+<div class="contenedor-admin">
+
+<h1>📊 Reportes del Negocio</h1>
+
+<div class="estadisticas">
+
+    <div class="card">
+        <h3>Citas del Día</h3>
+        <p id="citasDia">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Clientes Registrados</h3>
+        <p id="clientes">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Servicios Activos</h3>
+        <p id="servicios">0</p>
+    </div>
+
+    <div class="card">
+        <h3>Ingresos del Mes</h3>
+        <p id="ingresos">$0</p>
+    </div>
+
+</div>
+
+<h2>Servicios Más Solicitados</h2>
+
+<table>
+<thead>
+<tr>
+<th>Servicio</th>
+<th>Citas</th>
+<th>Ingresos</th>
+</tr>
+</thead>
+
+<tbody id="tablaReportes"></tbody>
+</table>
+
+</div>
+
+<script>
+const API = "http://localhost:3000/api/reportes";
+
+// cargar stats
+async function cargarStats(){
+
+    const res = await fetch(`${API}/resumen`);
+    const data = await res.json();
+
+    document.getElementById("citasDia").innerText = data.citasDia;
+    document.getElementById("clientes").innerText = data.clientes;
+    document.getElementById("servicios").innerText = data.servicios;
+    document.getElementById("ingresos").innerText = "$" + data.ingresos;
+}
+
+// servicios más solicitados
+async function cargarTabla(){
+
+    const res = await fetch(`${API}/servicios`);
+    const data = await res.json();
+
+    const tbody = document.getElementById("tablaReportes");
+    tbody.innerHTML = "";
+
+    data.forEach(s => {
+        tbody.innerHTML += `
+            <tr>
+                <td>${s.Servicio}</td>
+                <td>${s.Citas}</td>
+                <td>$${s.Ingresos}</td>
+            </tr>
+        `;
+    });
+}
+
+cargarStats();
+cargarTabla();
+</script>
+
+</body>
+</html>

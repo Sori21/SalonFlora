@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Salón Flora</title>
+
+    <link rel="stylesheet" href="../../assets/css/registro.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="registro-container">
+    <div class="back-button">
+    <a href="../../index.html" class="btn-back"> ←</a>
+    </div>
+
+    <div class="logo">
+        <img
+    src="https://thumbs.dreamstime.com/b/flor-de-c%C3%ADrculo-femenino-concepto-floral-pelo-rostro-perfil-y-flores-peluquer%C3%ADa-belleza-spa-o-similar-280378869.jpg"
+    alt="Logo Flora Salon"
+    class="logo-img">
+    </div>
+
+    <h1>Crear Cuenta</h1>
+
+<form id="registroForm">
+
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Nombre completo"
+        required>
+
+    <input
+        type="email"
+        id="correo"
+        placeholder="Correo electrónico"
+        required>
+
+    <input
+        type="tel"
+        id="telefono"
+        placeholder="Teléfono"
+        required>
+
+    <input
+        type="password"
+        id="password"
+        placeholder="Contraseña"
+        required>
+
+    <input
+        type="password"
+        id="confirmarPassword"
+        placeholder="Confirmar contraseña"
+        required>
+
+    <button type="submit">
+        Registrarme
+    </button>
+
+</form>
+
+<p id="mensaje"></p>
+    <div class="links">
+
+        <a href="../login/login.html">
+            ¿Ya tienes cuenta? Inicia sesión
+        </a>
+
+    </div>
+
+</div>
+<script src="../../js/registro.js"></script>
+</body>
+</html>

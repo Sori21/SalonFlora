@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fffafc;
+}
+
+/* Navbar */
+.custom-navbar {
+    background: #ffe4ec;
+    padding: 15px;
+}
+
+.navbar-brand {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #c94f7c !important;
+}
+
+.btn-flora {
+    background: #d46a92;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+}
+
+/* Hero */
+.promo-hero {
+    padding: 100px 20px;
+    background: linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+                url('https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.promo-hero h1 {
+    font-size: 4rem;
+    color: #c94f7c;
+}
+
+/* Promociones */
+.promo-card {
+    background: linear-gradient(135deg, #f8c8dc, #f5e1da);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.promo-card:hover {
+    transform: scale(1.05);
+}
+
+.promo-card h2 {
+    font-size: 3rem;
+    color: #c94f7c;
+}
+
+.promo-card p {
+    font-size: 1.3rem;
+    margin: 15px 0;
+}
+
+.promo-card span {
+    font-weight: bold;
+    color: #8c3a5b;
+}
+
+/* ==========================
+   FOOTER
+========================== */
+
+footer{
+
+    background:#c85a8f;
+
+    color:white;
+
+    text-align:center;
+
+    padding:30px;
+}
+.btn-back{
+
+    position:absolute;
+
+    top:20px;
+    left:20px;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    background:white;
+
+    text-decoration:none;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    color:#c85a8f;
+
+    font-size:24px;
+
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.btn{
+    position: relative;
+    z-index: 9999;
+}

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Clientes</title>
+
+ <link rel="stylesheet" href="../../assets/css/admin.css">
+
+</head>
+<body>
+
+<div class="contenedor">
+
+<h1>👥 Clientes Registrados</h1>
+
+<input
+type="text"
+id="buscador"
+placeholder="Buscar cliente..."
+class="buscador">
+
+<table>
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Nombre</th>
+    <th>Última Cita</th>
+    <th>Acciones</th>
+</tr>
+</thead>
+
+<tbody id="tablaClientes">
+
+<tr>
+<td colspan="5">
+Cargando clientes...
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+<script>
+
+const API =
+"http://localhost:3000/api";
+
+let clientes = [];
+
+async function cargarClientes(){
+
+    try{
+
+        const res =
+        await fetch(
+            `${API}/clientes`
+        );
+
+        clientes =
+        await res.json();
+
+        mostrarClientes(
+            clientes
+        );
+
+    }catch(error){
+
+        console.error(error);
+    }
+
+}
+
+function mostrarClientes(lista){
+
+    const tbody =
+    document.getElementById(
+        "tablaClientes"
+    );
+
+    tbody.innerHTML = "";
+
+    if(lista.length === 0){
+
+        tbody.innerHTML = `
+        <tr>
+            <td colspan="5">
+                No se encontraron clientes
+            </td>
+        </tr>
+        `;
+
+        return;
+    }
+
+    lista.forEach(cliente=>{
+
+    let ultimaCita = "Sin citas";
+
+        if(cliente.UltimaCita){
+
+    const fecha =
+    cliente.UltimaCita.split("T")[0];
+
+    const [anio, mes, dia] =
+    fecha.split("-");
+
+    ultimaCita =
+    `${dia}/${mes}/${anio}`;
+    }
+        
+
+       tbody.innerHTML += `
+<tr>
+    <td>${cliente.IdUsuario}</td>
+    <td>${cliente.Nombre}</td>
+    <td>${ultimaCita}</td>
+    <td>
+        <button
+        class="btn-ver"
+        onclick="verCliente(${cliente.IdUsuario})">
+
+        👁️ Ver
+
+        </button>
+    </td>
+</tr>
+`;
+    });
+
+}
+
+document
+.getElementById("buscador")
+.addEventListener(
+"keyup",
+function(){
+
+    const texto =
+    this.value.toLowerCase();
+
+   const filtrados = clientes.filter(cliente =>
+
+    cliente.Nombre
+    .toLowerCase()
+    .includes(texto)
+
+);
+
+    mostrarClientes(
+        filtrados
+    );
+
+});
+
+cargarClientes();
+async function verCliente(id){
+
+    try{
+
+        const res = await fetch(
+            `${API}/clientes/${id}`
+        );
+
+        const cliente =
+        await res.json();
+
+        document.getElementById(
+            "mNombre"
+        ).innerText =
+        cliente.Nombre;
+
+        document.getElementById(
+            "mCorreo"
+        ).innerText =
+        cliente.Correo;
+
+        document.getElementById(
+            "mTelefono"
+        ).innerText =
+        cliente.Telefono;
+
+        document.getElementById(
+            "mTotalCitas"
+        ).innerText =
+        cliente.TotalCitas;
+
+        document.getElementById(
+            "modalCliente"
+        ).style.display =
+        "flex";
+
+    }catch(error){
+
+        console.error(error);
+
+        alert(
+            "Error al cargar cliente"
+        );
+    }
+}
+function cerrarModalCliente(){
+
+    document.getElementById(
+        "modalCliente"
+    ).style.display =
+    "none";
+}
+
+</script>
+<div id="modalCliente" class="modal">
+
+    <div class="modal-content">
+
+        <h2>👤 Información del Cliente</h2>
+
+        <p>
+            <strong>Nombre:</strong>
+            <span id="mNombre"></span>
+        </p>
+
+        <p>
+            <strong>Correo:</strong>
+            <span id="mCorreo"></span>
+        </p>
+
+        <p>
+            <strong>Teléfono:</strong>
+            <span id="mTelefono"></span>
+        </p>
+
+        <p>
+            <strong>Total de citas:</strong>
+            <span id="mTotalCitas"></span>
+        </p>
+
+        <button
+        class="btn-cerrar"
+        onclick="cerrarModalCliente()">
+
+        Cerrar
+
+        </button>
+
+    </div>
+
+</div>
+</body>
+</html>

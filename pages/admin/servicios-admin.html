@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrar Servicios</title>
+    <link rel="stylesheet" href="../../assets/css/admin.css">
+</head>
+
+<body>
+
+<div class="contenedor-admin">
+
+    <h1>💅 Gestión de Servicios</h1>
+
+    <div class="back-button">
+        <a href="javascript:history.back()" class="btn-back">←</a>
+    </div>
+
+    <div class="acciones">
+        <button class="btn" onclick="mostrarFormulario()">
+            + Nuevo Servicio
+        </button>
+    </div>
+
+    <!-- FORMULARIO -->
+    <div id="formularioServicio" style="display:none;">
+
+        <h2>Nuevo Servicio</h2>
+
+        <form id="crearServicioForm">
+
+            <input type="text" id="nombre" placeholder="Nombre del servicio" required>
+
+            <textarea id="descripcion" placeholder="Descripción" required></textarea>
+
+            <input type="number" id="duracion" placeholder="Duración en minutos" required>
+
+            <input type="number" step="0.01" id="precio" placeholder="Precio" required>
+
+            <select id="estado">
+                <option value="Activo">Activo</option>
+                <option value="Inactivo">Inactivo</option>
+            </select>
+
+            <button type="submit" class="btn-guardar">Guardar Servicio</button>
+
+        </form>
+
+        <p id="mensaje"></p>
+
+    </div>
+
+    <!-- TABLA -->
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Servicio</th>
+                <th>Duración</th>
+                <th>Precio</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabla-servicios">
+            <tr><td colspan="6">Cargando...</td></tr>
+        </tbody>
+
+    </table>
+
+</div>
+
+<script src="../../js/servicios-admin.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+/* PANEL DERECHO */
+.flora-panel{
+    background: rgba(255,255,255,.85);
+    backdrop-filter: blur(10px);
+}
+
+/* BOTÓN FLORA (YA TU ESTILO) */
+.btn-flora{
+
+    background: linear-gradient(135deg,#e38db2,#c85a8f);
+    color:white !important;
+    border:none;
+    border-radius:14px;
+    padding:12px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.btn-flora:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 20px rgba(200,90,143,.35);
+}
+
+/* HORARIOS */
+.hora-btn{
+
+    background:white;
+    border:1px solid #f2c1d6;
+    color:#c85a8f;
+    font-weight:600;
+    border-radius:12px;
+    padding:8px 14px;
+    transition:.3s;
+}
+
+.hora-btn:hover{
+    background:#ffe6f1;
+    transform:scale(1.05);
+}
+
+/* OCUPADO */
+.hora-btn.ocupado{
+    background:#ddd;
+    color:#999;
+    border:none;
+}
+
+/* RESPONSIVE MEJORADO */
+@media(max-width:768px){
+    .flora-panel{
+        text-align:center;
+    }
+}
+.empleados-grid{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(170px,1fr));
+    gap:15px;
+    margin-top:10px;
+}
+
+.empleado-card{
+    background:white;
+    border-radius:15px;
+    padding:10px;
+    text-align:center;
+    cursor:pointer;
+    border:2px solid transparent;
+    transition:.3s;
+}
+
+.empleado-card:hover{
+    transform:translateY(-5px);
+}
+
+.empleado-card.selected{
+    border:2px solid #d96aa7;
+}
+
+.empleado-card img{
+    width:100%;
+    height:140px;
+    object-fit:cover;
+    border-radius:12px;
+}
+
+.empleado-card h6{
+    margin-top:10px;
+}
